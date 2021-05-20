@@ -1,15 +1,20 @@
 import React from 'react'
 import useFirestore from '../hooks/useFirestore'
+import {BsTrashFill} from 'react-icons/bs'
 import {motion} from 'framer-motion'
 
 const ImageGrid = ({setSelectedImg}) => {
 
-
     const {docs, setDocs} = useFirestore('images');
     console.log(docs);
+
+    const handleTrash = (e) =>{
+        setDocs([])
+    }
     
     return(
-        <div className="img-grid">
+        <div className="img-grid"
+         aria-label="List of images">
             {docs && docs.map (doc => (
                 <motion.div className="img-wrap" key={doc.id}
                     layout
@@ -23,6 +28,9 @@ const ImageGrid = ({setSelectedImg}) => {
                     />
                 </motion.div>
             ))}
+            <BsTrashFill
+                onClick={handleTrash}
+            />
         </div>
     )
 }
